@@ -224,6 +224,15 @@ public class Message {
     return request;
   }
 
+  public static JSONObject createSuccessResponse(@NonNull Request request, String data) {
+    try {
+      return createSuccessResponse(request, new JSONObject(data));
+    } catch (JSONException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   public static JSONObject createSuccessResponse(@NonNull Request request, JSONObject data) {
     JSONObject response = new JSONObject();
     try {

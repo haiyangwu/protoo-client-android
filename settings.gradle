@@ -1,1 +1,1 @@
-include ':example', ':protoo-client'
+include ':protoo-client'

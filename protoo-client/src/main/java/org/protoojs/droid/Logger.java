@@ -7,7 +7,7 @@ import java.io.StringWriter;
 
 public class Logger {
 
-  private static LogLevel loggableLevel = LogLevel.LOG_NONE;
+  private static LogLevel loggableLevel = LogLevel.LOG_WARN;
 
   public enum LogLevel {
     LOG_NONE,

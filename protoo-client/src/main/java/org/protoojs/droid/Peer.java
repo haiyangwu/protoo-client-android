@@ -23,7 +23,7 @@ public class Peer implements WebSocketTransport.Listener {
 
     void onRequest(@NonNull Message.Request request, @NonNull ServerRequestHandler handler);
 
-    void notification(@NonNull Message.Notification notification);
+    void onNotification(@NonNull Message.Notification notification);
 
     void onDisconnected();
 
@@ -220,13 +220,14 @@ public class Peer implements WebSocketTransport.Listener {
   }
 
   private void handleResponse(Message.Response response) {
-    ClientRequestHandlerProxy sent = mSends.get(response.getId());
+    ClientRequestHandlerProxy sent = mSends.remove(response.getId());
     if (sent == null) {
       Logger.e(
           TAG, "received response does not match any sent request [id:" + response.getId() + "]");
       return;
     }
 
+    sent.close();
     if (response.isOK()) {
       sent.resolve(response.getData().toString());
     } else {
@@ -235,7 +236,7 @@ public class Peer implements WebSocketTransport.Listener {
   }
 
   private void handleNotification(Message.Notification notification) {
-    mListener.notification(notification);
+    mListener.onNotification(notification);
   }
 
   // implement WebSocketTransport$Listener
@@ -254,7 +255,7 @@ public class Peer implements WebSocketTransport.Listener {
     if (mClosed) {
       return;
     }
-    Logger.d(TAG, "onFail()");
+    Logger.e(TAG, "onFail()");
     mConnected = false;
     mListener.onFail();
   }
@@ -279,7 +280,7 @@ public class Peer implements WebSocketTransport.Listener {
     if (mClosed) {
       return;
     }
-    Logger.d(TAG, "onDisconnected()");
+    Logger.w(TAG, "onDisconnected()");
     mConnected = false;
     mListener.onDisconnected();
   }
@@ -289,7 +290,7 @@ public class Peer implements WebSocketTransport.Listener {
     if (mClosed) {
       return;
     }
-    Logger.d(TAG, "onClose()");
+    Logger.w(TAG, "onClose()");
     mClosed = true;
     mConnected = false;
     mListener.onClose();

@@ -1,7 +1,5 @@
 package org.protoojs.droid.transports;
 
-import android.support.annotation.MainThread;
-
 import org.json.JSONObject;
 import org.protoojs.droid.Logger;
 import org.protoojs.droid.Message;
@@ -71,7 +69,8 @@ public class WebSocketTransport implements IWebSocketConnectionHandler {
   public void connect(Listener listener) {
     mListener = listener;
     try {
-      mWebSocketConnection.connect(mUrl, this, mOptions);
+      String[] wsSubprotocols = {"protoo"};
+      mWebSocketConnection.connect(mUrl, wsSubprotocols, this, mOptions, null);
     } catch (WebSocketException ex) {
       Logger.e(TAG, "", ex);
     }
@@ -120,7 +119,7 @@ public class WebSocketTransport implements IWebSocketConnectionHandler {
     if (mClosed) {
       return;
     }
-    Logger.d(TAG, "onClose()");
+    Logger.w(TAG, "onClose() " + reason);
     boolean isOnFail =
         (code == IWebSocketConnectionHandler.CLOSE_CANNOT_CONNECT)
             || (!mConnected && code == IWebSocketConnectionHandler.CLOSE_RECONNECT);

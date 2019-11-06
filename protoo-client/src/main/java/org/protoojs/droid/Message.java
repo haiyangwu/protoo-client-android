@@ -154,10 +154,8 @@ public class Message {
   }
 
   public static Message parse(String raw) {
-    Logger.d(TAG, "parse()");
-
+    Logger.d(TAG, "parse() ");
     JSONObject object;
-
     try {
       object = new JSONObject(raw);
     } catch (JSONException e) {
@@ -171,11 +169,11 @@ public class Message {
       long id = object.optLong("id");
 
       if (TextUtils.isEmpty(method)) {
-        Logger.e(TAG, "parse() | missing/invalid method field");
+        Logger.e(TAG, "parse() | missing/invalid method field. rawData: " + raw);
         return null;
       }
       if (id == 0) {
-        Logger.e(TAG, "parse() | missing/invalid id field");
+        Logger.e(TAG, "parse() | missing/invalid id field. rawData: " + raw);
         return null;
       }
 
@@ -185,7 +183,7 @@ public class Message {
       long id = object.optLong("id");
 
       if (id == 0) {
-        Logger.e(TAG, "parse() | missing/invalid id field");
+        Logger.e(TAG, "parse() | missing/invalid id field. rawData: " + raw);
         return null;
       }
 
@@ -199,14 +197,14 @@ public class Message {
       String method = object.optString("method");
 
       if (TextUtils.isEmpty(method)) {
-        Logger.e(TAG, "parse() | missing/invalid method field");
+        Logger.e(TAG, "parse() | missing/invalid method field. rawData: " + raw);
         return null;
       }
 
       return new Notification(method, object.optJSONObject("data"));
     } else {
       // Invalid.
-      Logger.e(TAG, "parse() | missing request/response field");
+      Logger.e(TAG, "parse() | missing request/response field. rawData: " + raw);
       return null;
     }
   }
@@ -264,7 +262,7 @@ public class Message {
   public static JSONObject createNotification(String method, JSONObject data) {
     JSONObject notification = new JSONObject();
     try {
-      notification.put("notification", true);
+      notification.put("onNotification", true);
       notification.put("method", method);
       notification.put("data", data != null ? data : new JSONObject());
     } catch (JSONException e) {

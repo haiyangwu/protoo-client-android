@@ -11,6 +11,8 @@ import org.protoojs.droid.transports.WebSocketTransport;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public class Peer implements WebSocketTransport.Listener {
 
   private static final String TAG = "Peer";
@@ -144,6 +146,33 @@ public class Peer implements WebSocketTransport.Listener {
 
     // Emit 'close' event.
     mListener.onClose();
+  }
+
+  public Observable<String> request(String method) {
+    return request(method, null);
+  }
+
+  public Observable<String> request(String method, JSONObject data) {
+    return Observable.create(
+        emitter ->
+            request(
+                method,
+                data,
+                new ClientRequestHandler() {
+                  @Override
+                  public void resolve(String data) {
+                    if (!emitter.isDisposed()) {
+                      emitter.onNext(data);
+                    }
+                  }
+
+                  @Override
+                  public void reject(long error, String errorReason) {
+                    if (!emitter.isDisposed()) {
+                      emitter.onError(new ProtooException(error, errorReason));
+                    }
+                  }
+                }));
   }
 
   public void request(String method, String data, ClientRequestHandler clientRequestHandler) {

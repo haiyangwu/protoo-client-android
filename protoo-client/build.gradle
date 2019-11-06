@@ -40,4 +40,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     api 'io.crossbar.autobahn:autobahn-android:18.5.1'
+    api "io.reactivex.rxjava3:rxjava:3.0.0-RC4"
 }

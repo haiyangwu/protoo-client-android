@@ -74,6 +74,7 @@ public class Peer implements WebSocketTransport.Listener {
 
     @Override
     public void resolve(String data) {
+      Logger.d(TAG, "request() " + mMethod + " success, " + data);
       if (mClientRequestHandler != null) {
         mClientRequestHandler.resolve(data);
       }
@@ -81,6 +82,7 @@ public class Peer implements WebSocketTransport.Listener {
 
     @Override
     public void reject(long error, String errorReason) {
+      Logger.w(TAG, "request() " + mMethod + " fail, " + error + ", " + errorReason);
       if (mClientRequestHandler != null) {
         mClientRequestHandler.reject(error, errorReason);
       }
@@ -149,10 +151,10 @@ public class Peer implements WebSocketTransport.Listener {
   }
 
   public Observable<String> request(String method) {
-    return request(method, null);
+    return request(method, new JSONObject());
   }
 
-  public Observable<String> request(String method, JSONObject data) {
+  public Observable<String> request(String method, @NonNull JSONObject data) {
     return Observable.create(
         emitter ->
             request(
@@ -183,10 +185,11 @@ public class Peer implements WebSocketTransport.Listener {
     }
   }
 
-  public void request(String method, JSONObject data, ClientRequestHandler clientRequestHandler) {
+  public void request(
+      String method, @NonNull JSONObject data, ClientRequestHandler clientRequestHandler) {
     JSONObject request = Message.createRequest(method, data);
     long requestId = request.optLong("id");
-    Logger.d(TAG, String.format("request() [method:%s]", method));
+    Logger.d(TAG, String.format("request() [method:%s, data:%s]", method, data.toString()));
     String payload = mTransport.sendMessage(request);
 
     long timeout = (long) (1500 * (15 + (0.1 * payload.length())));

@@ -5,9 +5,9 @@ import android.util.Log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class Logger {
+class Logger {
 
-  private static LogLevel loggableLevel = LogLevel.LOG_TRACE;
+  private static LogLevel loggableLevel = LogLevel.LOG_WARN;
 
   public enum LogLevel {
     LOG_NONE,

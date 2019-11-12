@@ -3,17 +3,16 @@ package org.protoojs.droid;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.protoojs.droid.transports.WebSocketTransport;
+import org.protoojs.droid.transports.AbsWebSocketTransport;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.rxjava3.core.Observable;
-
-public class Peer implements WebSocketTransport.Listener {
+public class Peer implements AbsWebSocketTransport.Listener {
 
   private static final String TAG = "Peer";
 
@@ -66,7 +65,7 @@ public class Peer implements WebSocketTransport.Listener {
     @Override
     public void run() {
       mSends.remove(mRequestId);
-      // TODO: error code redefine. use http timeout.
+      // TODO (HaiyangWu): error code redefine. use http timeout
       if (mClientRequestHandler != null) {
         mClientRequestHandler.reject(408, "request timeout");
       }
@@ -97,7 +96,7 @@ public class Peer implements WebSocketTransport.Listener {
   // Closed flag.
   private boolean mClosed = false;
   // Transport.
-  @NonNull private final WebSocketTransport mTransport;
+  @NonNull private final AbsWebSocketTransport mTransport;
   // Listener.
   @NonNull private final Listener mListener;
   // Handler for timeout check.
@@ -109,7 +108,7 @@ public class Peer implements WebSocketTransport.Listener {
   // Map of pending sent request objects indexed by request id.
   private Map<Long, ClientRequestHandlerProxy> mSends = new HashMap<>();
 
-  public Peer(@NonNull WebSocketTransport transport, @NonNull Listener listener) {
+  public Peer(@NonNull AbsWebSocketTransport transport, @NonNull Listener listener) {
     mTransport = transport;
     mListener = listener;
     mTimerCheckHandler = new Handler(Looper.getMainLooper());
@@ -148,33 +147,6 @@ public class Peer implements WebSocketTransport.Listener {
 
     // Emit 'close' event.
     mListener.onClose();
-  }
-
-  public Observable<String> request(String method) {
-    return request(method, new JSONObject());
-  }
-
-  public Observable<String> request(String method, @NonNull JSONObject data) {
-    return Observable.create(
-        emitter ->
-            request(
-                method,
-                data,
-                new ClientRequestHandler() {
-                  @Override
-                  public void resolve(String data) {
-                    if (!emitter.isDisposed()) {
-                      emitter.onNext(data);
-                    }
-                  }
-
-                  @Override
-                  public void reject(long error, String errorReason) {
-                    if (!emitter.isDisposed()) {
-                      emitter.onError(new ProtooException(error, errorReason));
-                    }
-                  }
-                }));
   }
 
   public void request(String method, String data, ClientRequestHandler clientRequestHandler) {
@@ -231,8 +203,13 @@ public class Peer implements WebSocketTransport.Listener {
         new ServerRequestHandler() {
           @Override
           public void accept(String data) {
-            JSONObject response = Message.createSuccessResponse(request, data);
             try {
+              JSONObject response;
+              if (TextUtils.isEmpty(data)) {
+                response = Message.createSuccessResponse(request, new JSONObject());
+              } else {
+                response = Message.createSuccessResponse(request, new JSONObject(data));
+              }
               mTransport.sendMessage(response);
             } catch (Exception e) {
               e.printStackTrace();
@@ -271,7 +248,7 @@ public class Peer implements WebSocketTransport.Listener {
     mListener.onNotification(notification);
   }
 
-  // implement WebSocketTransport$Listener
+  // implement MyWebSocketTransport$Listener
   @Override
   public void onOpen() {
     if (mClosed) {

@@ -222,15 +222,7 @@ public class Message {
     return request;
   }
 
-  public static JSONObject createSuccessResponse(@NonNull Request request, String data) {
-    try {
-      return createSuccessResponse(request, new JSONObject(data));
-    } catch (JSONException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
+  @NonNull
   public static JSONObject createSuccessResponse(@NonNull Request request, JSONObject data) {
     JSONObject response = new JSONObject();
     try {
@@ -244,6 +236,7 @@ public class Message {
     return response;
   }
 
+  @NonNull
   public static JSONObject createErrorResponse(
       @NonNull Request request, long errorCode, String errorReason) {
     JSONObject response = new JSONObject();
@@ -259,10 +252,11 @@ public class Message {
     return response;
   }
 
+  @NonNull
   public static JSONObject createNotification(String method, JSONObject data) {
     JSONObject notification = new JSONObject();
     try {
-      notification.put("onNotification", true);
+      notification.put("notification", true);
       notification.put("method", method);
       notification.put("data", data != null ? data : new JSONObject());
     } catch (JSONException e) {

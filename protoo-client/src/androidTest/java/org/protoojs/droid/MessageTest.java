@@ -1,11 +1,15 @@
 package org.protoojs.droid;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 import org.json.JSONObject;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(AndroidJUnit4.class)
 public class MessageTest {
 
   private static final String METHOD_TEST = "test";

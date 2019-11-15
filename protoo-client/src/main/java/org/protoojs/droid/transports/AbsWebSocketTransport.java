@@ -24,8 +24,8 @@ public abstract class AbsWebSocketTransport {
   // WebSocket URL.
   protected String mUrl;
 
-  public AbsWebSocketTransport(String mUrl) {
-    this.mUrl = mUrl;
+  public AbsWebSocketTransport(String url) {
+    this.mUrl = url;
   }
 
   public abstract void connect(Listener listener);

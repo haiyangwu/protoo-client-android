@@ -8,6 +8,7 @@ public abstract class AbsWebSocketTransport {
   public interface Listener {
 
     void onOpen();
+
     /** Connection could not be established in the first place. */
     void onFail();
 

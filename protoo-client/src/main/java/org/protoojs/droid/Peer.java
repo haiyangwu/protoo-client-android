@@ -33,6 +33,10 @@ public class Peer implements AbsWebSocketTransport.Listener {
 
   public interface ServerRequestHandler {
 
+    default void accept() {
+      accept(null);
+    }
+
     void accept(String data);
 
     void reject(long code, String errorReason);

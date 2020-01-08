@@ -29,7 +29,7 @@ env:
     # - API=24 ABI=x86_64
     # - API=25 ABI=x86_64
     #-  API=26 ABI=x86_64 # Fails with unrecognized tests? orchestrator change or something?
-    - API=27 ABI=x86_64
+     - API=27 ABI=x86_64
     # Slowness/timing issues / Fails with unresponsive adb command / so unrecognized API for adb
     # - API=28 ABI=x86_64
     # Fails I think because of perf + timeouts. 10 minute wait not enough, fixable

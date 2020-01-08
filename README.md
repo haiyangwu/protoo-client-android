@@ -12,5 +12,4 @@ _(Coming soon)_
 _(Nothing yet)_
 
 ## License
-Copyright (c) 2019 Haiyang Wu  
-Licensed under the MIT license.
+[MIT](./LICENSE).

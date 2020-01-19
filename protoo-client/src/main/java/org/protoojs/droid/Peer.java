@@ -1,5 +1,6 @@
 package org.protoojs.droid;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -111,6 +112,7 @@ public class Peer implements AbsWebSocketTransport.Listener {
   // Custom data object.
   private JSONObject mData;
   // Map of pending sent request objects indexed by request id.
+  @SuppressLint("UseSparseArrays")
   private Map<Long, ClientRequestHandlerProxy> mSends = new HashMap<>();
 
   public Peer(@NonNull AbsWebSocketTransport transport, @NonNull Listener listener) {

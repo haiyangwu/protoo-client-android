@@ -21,7 +21,7 @@ public class WebSocketTransport extends AbsWebSocketTransport {
     // ...
 }
 ```
-> `protoo-client-android` just define a base class [`AbsWebSocketTransport`][code-AbsWebSocketTransport] 
+> `protoo-client-android` just define a base class [`AbsWebSocketTransport`][code-base-websocket-transport] 
 > which offer opportunity to implement your own `WebSocketTransport` 
 
 * creates a WebSocket connection
@@ -65,4 +65,4 @@ Haiyang Wu([@haiyangwu](https://github.com/haiyangwu/) at Github)
 [travis-ci-protoo-client-android]:https://travis-ci.org/haiyangwu/protoo-client-android
 [codacy-grade-shield-protoo-client-android]:https://api.codacy.com/project/badge/Grade/bc233c4d62de4fe9aee1ec9e7c406ef4
 [codacy-grade-protoo-client-android]:https://app.codacy.com/manual/haiyangwu/protoo-client-android?utm_source=github.com&utm_medium=referral&utm_content=haiyangwu/protoo-client-android&utm_campaign=Badge_Grade_Dashboard
-[code-AbsWebSocketTransport]:./protoo-client/src/main/java/org/protoojs/droid/transports/AbsWebSocketTransport.java
+[code-base-websocket-transport]:./protoo-client/src/main/java/org/protoojs/droid/transports/AbsWebSocketTransport.java

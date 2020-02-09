@@ -1,6 +1,6 @@
 # protoo-client-android
 
-![Bintray][bintray-shield-protoo-client-android]
+[![Bintray][bintray-shield-protoo-client-android]][bintray-protoo-client-android]
 [![Build Status][travis-ci-shield-protoo-client-android]][travis-ci-protoo-client-android] 
 [![Codacy Badge][codacy-grade-shield-protoo-client-android]][codacy-grade-protoo-client-android]
 
@@ -60,6 +60,7 @@ Haiyang Wu([@haiyangwu](https://github.com/haiyangwu/) at Github)
 
 
 
+[bintray-protoo-client-android]:https://mvnrepository.com/artifact/org.protoojs.droid/protoo-client
 [bintray-shield-protoo-client-android]:https://img.shields.io/bintray/v/haiyangwu/maven/protoo-client
 [travis-ci-shield-protoo-client-android]:https://travis-ci.org/haiyangwu/protoo-client-android.svg?branch=master
 [travis-ci-protoo-client-android]:https://travis-ci.org/haiyangwu/protoo-client-android

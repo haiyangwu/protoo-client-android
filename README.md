@@ -27,7 +27,6 @@ public class WebSocketTransport extends AbsWebSocketTransport {
 * creates a WebSocket connection
 
 ```java
-// class WebSocketTransport extends AbsWebSocketTransport
 WebSocketTransport transport = new WebSocketTransport("wss://example.org");
 ```
 

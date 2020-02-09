@@ -14,15 +14,18 @@ Include `protoo-client-android` into your project, for example, as a Gradle comp
 implementation 'org.protoojs.droid:protoo-client:4.0.3'
 ```
 ### Example
->`protoo-client-android` just define a base class [`AbsWebSocketTransport`][code-AbsWebSocketTransport] which offer opportunity to implement your own `WebSocketTransport` 
+> `protoo-client-android` just define a base class [`AbsWebSocketTransport`][code-AbsWebSocketTransport] 
+> which offer opportunity to implement your own `WebSocketTransport` 
 
 * creates a WebSocket connection
+
 ```java
 // class WebSocketTransport extends AbsWebSocketTransport
 WebSocketTransport transport = new WebSocketTransport("wss://example.org");
 ```
 
 * create a participant in a remote room
+
 ```java
 private Peer.Listener peerListener =
       new Peer.Listener() {
@@ -32,7 +35,10 @@ mPeer = new Peer(transport, peerListener);
 ```
 
 * send request or notify
-Once connected to remote server `Peer.Listener#onOpen` will be called, then you can call `Peer#request` or `Peer#notify` to send message to server.
+
+Once connected to remote server `Peer.Listener#onOpen` will be called, then you can call 
+`Peer#request` or `Peer#notify` to send message to server.
+
 ```java
 mPeer.request("dummy", ...);
 mPeer.notify("dummy", ...);
@@ -42,7 +48,7 @@ mPeer.notify("dummy", ...);
 Haiyang Wu([@haiyangwu](https://github.com/haiyangwu/) at Github)
 
 ## License
-[MIT](./LICENSE).
+[MIT](./LICENSE)
 
 
 

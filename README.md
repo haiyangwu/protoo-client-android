@@ -14,6 +14,13 @@ Include `protoo-client-android` into your project, for example, as a Gradle comp
 implementation 'org.protoojs.droid:protoo-client:4.0.3'
 ```
 ### Example
+
+* implement your own `WebSocketTransport`
+```java
+public class WebSocketTransport extends AbsWebSocketTransport {
+    // ...
+}
+```
 > `protoo-client-android` just define a base class [`AbsWebSocketTransport`][code-AbsWebSocketTransport] 
 > which offer opportunity to implement your own `WebSocketTransport` 
 
